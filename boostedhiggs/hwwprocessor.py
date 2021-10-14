@@ -163,6 +163,36 @@ class HwwProcessor(processor.ProcessorABC):
                 hist2.axis.Regular(30, 15, 200, name="jetlepmsd", label="(Jet - lep) $m_{sd}$ [GeV]"),
                 hist2.storage.Weight(),
             ),
+            "mt_lepmet_cutflow": hist2.Hist(
+                hist2.axis.StrCategory([], name="region", growth=True),
+                hist2.axis.IntCategory([], name='cut', label='Cut index', growth=True),
+                hist2.axis.Regular(20, 0, 300, name="mt_lepmet", label=r"$m_{T}$ [GeV]"),
+                hist2.storage.Weight(),
+            ),
+            "met_cutflow": hist2.Hist(
+                hist2.axis.StrCategory([], name="region", growth=True),
+                hist2.axis.IntCategory([], name='cut', label='Cut index', growth=True),
+                hist2.axis.Regular(30, 0, 500, name="met", label=r"$p_T^{miss}$ [GeV]"),
+                hist2.storage.Weight(),
+            ),
+            "btag_cutflow": hist2.Hist(
+                hist2.axis.StrCategory([], name="region", growth=True),
+                hist2.axis.IntCategory([], name='cut', label='Cut index', growth=True),
+                hist2.axis.Regular(20, 0, 1, name="btag", label="Jet btag (opphem)"),
+                hist2.storage.Weight(),
+            ),
+            "lepminiIso_cutflow": hist2.Hist(
+                hist2.axis.StrCategory([], name="region", growth=True),
+                hist2.axis.IntCategory([], name='cut', label='Cut index', growth=True),
+                hist2.axis.Regular(25, 0, 1, name="lepminiIso", label="lep miniIso"),
+                hist2.storage.Weight(),
+            ),
+            "leprelIso_cutflow": hist2.Hist(
+                hist2.axis.StrCategory([], name="region", growth=True),
+                hist2.axis.IntCategory([], name='cut', label='Cut index', growth=True),
+                hist2.axis.Regular(25, 0, 1, name="leprelIso", label="lep Rel Iso"),
+                hist2.storage.Weight(),
+            ),
 
         }
         
@@ -490,6 +520,36 @@ class HwwProcessor(processor.ProcessorABC):
                 genflavor=normalize(hWWlepqq_flavor, cut),
                 weight=weights_region.weight()[cut],
             )
+            output["mt_lepmet_cutflow"].fill(
+                region=region,
+                cut=0,
+                mt_lepmet=normalize(mt_lep_met, cut),
+                weight=weights_region.weight()[cut],
+            )
+            output["met_cutflow"].fill(
+                region=region,
+                cut=0,
+                met=normalize(met.pt, cut),
+                weight=weights_region.weight()[cut],
+            )
+            output["btag_cutflow"].fill(
+                region=region,
+                cut=0,
+                btag=normalize(bjets_ophem, cut),
+                weight=weights_region.weight()[cut],
+            )
+            output["lepminiIso_cutflow"].fill(
+                region=region,
+                cut=0,
+                lepminiIso=normalize(lep_miniIso, cut),
+                weight=weights_region.weight()[cut],
+            )
+            output["leprelIso_cutflow"].fill(
+                region=region,
+                cut=0,
+                leprelIso=normalize(lep_relIso, cut),
+                weight=weights_region.weight()[cut],
+            )
             for i, cut in enumerate(regions[region]):
                 allcuts.add(cut)
                 cut = selection.all(*allcuts)
@@ -499,11 +559,41 @@ class HwwProcessor(processor.ProcessorABC):
                     genflavor=normalize(hWWlepqq_flavor, cut),
                     weight=weights_region.weight()[cut],
                 )
+                output["mt_lepmet_cutflow"].fill(
+                    region=region,
+                    cut=i + 1,
+                    mt_lepmet=normalize(mt_lep_met, cut),
+                    weight=weights_region.weight()[cut],
+                )
+                output["met_cutflow"].fill(
+                    region=region,
+                    cut=i + 1,
+                    met=normalize(met.pt, cut),
+                    weight=weights_region.weight()[cut],
+                )
+                output["btag_cutflow"].fill(
+                    region=region,
+                    cut=i + 1,
+                    btag=normalize(bjets_ophem, cut),
+                    weight=weights_region.weight()[cut],
+                )
+                output["lepminiIso_cutflow"].fill(
+                    region=region,
+                    cut=i + 1,
+                    lepminiIso=normalize(lep_miniIso, cut),
+                    weight=weights_region.weight()[cut],
+                )
+                output["leprelIso_cutflow"].fill(
+                    region=region,
+                    cut=i + 1,
+                    leprelIso=normalize(lep_relIso, cut),
+                    weight=weights_region.weight()[cut],
+                )
                 
         for region in regions:
-            #if isRealData:
-            #    if "SingleMuon" in dataset and "hadel" in region: continue
-            #    if "SingleElectron" in dataset and "hadmu" in region: continue
+            if isRealData:
+                if "SingleMuon" in dataset and "hadel" in region: continue
+                if "SingleElectron" in dataset and "hadmu" in region: continue
             fill(region)
 
         return {dataset: output}
