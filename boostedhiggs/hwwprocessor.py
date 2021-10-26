@@ -430,10 +430,16 @@ class HwwProcessor(processor.ProcessorABC):
         selection.add("mtlepmet", mt_lep_met < 80.)
 
         regions = {
+            "hadel_nomt": ["triggere", "metfilters", "lumimask", "oneelectron", "fjacc", "fjmsd", "btag_ophem_med", "met20", "lepinfj", "electroniso"],
+            "hadmu_nomt": ["triggermu", "metfilters", "lumimask", "onemuon", "fjacc", "fjmsd", "btag_ophem_med", "met20", "lepinfj", "muoniso"],
+            "hadel_nomet": ["triggere", "metfilters", "lumimask", "oneelectron", "fjacc", "fjmsd", "btag_ophem_med", "lepinfj", "mtlepmet", "electroniso"],
+            "hadmu_nomet": ["triggermu", "metfilters", "lumimask", "onemuon", "fjacc", "fjmsd", "btag_ophem_med", "lepinfj", "mtlepmet", "muoniso"],
+            "hadel_nobtag": ["triggere", "metfilters", "lumimask", "oneelectron", "fjacc", "fjmsd", "met20", "lepinfj", "mtlepmet", "electroniso"],
+            "hadmu_nobtag": ["triggermu", "metfilters", "lumimask", "onemuon", "fjacc", "fjmsd", "met20", "lepinfj", "mtlepmet", "muoniso"],
             #"hadel_noiso": ["triggere", "metfilters", "lumimask", "oneelectron", "fjacc", "fjmsd", "btag_ophem_med", "met20", "mtlepmet"],
             #"hadmu_noiso": ["triggermu", "metfilters", "lumimask", "onemuon", "fjacc", "fjmsd", "btag_ophem_med", "met20", "mtlepmet"],
-            "hadel": ["triggere", "metfilters", "lumimask", "oneelectron", "fjacc", "fjmsd", "btag_ophem_med", "met20", "lepinfj", "mtlepmet", "electroniso"],
-            "hadmu": ["triggermu", "metfilters", "lumimask", "onemuon", "fjacc", "fjmsd", "btag_ophem_med", "met20", "lepinfj", "mtlepmet", "muoniso"],
+            #"hadel": ["triggere", "metfilters", "lumimask", "oneelectron", "fjacc", "fjmsd", "btag_ophem_med", "met20", "lepinfj", "mtlepmet", "electroniso"],
+            #"hadmu": ["triggermu", "metfilters", "lumimask", "onemuon", "fjacc", "fjmsd", "btag_ophem_med", "met20", "lepinfj", "mtlepmet", "muoniso"],
             #"noselection": []
         }
 
