@@ -9,7 +9,6 @@ import copy
 import hist as hist2
 from coffea import processor
 
-
 def read_hists(sample, path):
     files = os.listdir(path)
 
@@ -95,11 +94,12 @@ def load_hists(sample_dic, histogram, region, path):
                 # load and save histograms by region
                 H = cPickle.load(f)
                 k = [key for key in H][0]
-
                 histos = dict()
+                
                 try:
                     histos[histogram] = H[k][histogram][{"region":region}]
                 except:
+                    print('did not find histogram')
                     gc.enable()
                     continue
 
@@ -124,7 +124,6 @@ def scale_hists(sample_dic, xsec_path, lumi):
 
     out = []
     for sample in sample_dic:
-    
         
         hists = sample_dic[sample]
         sumw = sample_dic[sample]["sumw"]
@@ -143,6 +142,8 @@ def scale_hists(sample_dic, xsec_path, lumi):
                 
         out.append(hists)
     
+    print(sample_dic)
+    print(sample)
     if len(out) == 1:
         return {sample.split("_")[0]: out[0]}
     else:
@@ -175,7 +176,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--hpath",     dest="hpath",     default=None,      type=str,   help="path to histograms",         required=True)
     parser.add_argument("--sample",    dest="sample",    default=None,      type=str,   help="sample to process (eg hww)", required=True)
-    parser.add_argument("--histogram", dest="histogram", default=None,      type=str,   help="histogram to process",       required=True)
+    parser.add_argument("--histogram", dest="histogram", default=None,      type=str,   help="histograms to process",      required=True)
     parser.add_argument("--region",    dest="region",    default=None,      type=str,   help="region to process",          required=True)
     parser.add_argument("--lumi",      dest="lumi",      default=None,      type=float, help="integrated luminosity",      required=True)
     parser.add_argument("--xsecs",     dest="xsecs",     default=None,      type=str,   help="path to cross sections",     required=True)

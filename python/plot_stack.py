@@ -43,7 +43,7 @@ def main(args):
 
     map_proc['data'] = data_key
     paths_by_proc['hww'] = f"{input_dir}/hww_{args.hist_name}.pkl"
-    
+
     mc_procs = ["tt_semileptonic", "tt_hadronic", "tt_dileptonic", "qcd", "wjets", "zjets", "st"]
     for mc in mc_procs:
         paths_by_proc[mc] = f"{input_dir}/{mc}_{args.hist_name}.pkl"

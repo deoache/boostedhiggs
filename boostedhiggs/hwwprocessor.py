@@ -45,9 +45,10 @@ class HwwProcessor(processor.ProcessorABC):
             },
             2017: {
                 'e': [
-                    "Ele50_CaloIdVT_GsfTrkIdT_PFJet165",
+                    #"Ele50_CaloIdVT_GsfTrkIdT_PFJet165",
                     "Ele115_CaloIdVT_GsfTrkIdT",
-                    "Ele15_IsoVVVL_PFHT600",
+                    #"Ele15_IsoVVVL_PFHT600",
+                    "Ele35_WPTight_Gsf",
                 ],
                 'mu': [
                     "Mu50",
